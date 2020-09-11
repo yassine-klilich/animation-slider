@@ -27,10 +27,13 @@ let mouseMove = function(e) {
     sliderThumb.style.transform = `translateX(${thumbX}px)`;
     sliderCounter.style.transform = `translateX(${counterX}px)`;
     
-    let valuePercent = (value / sliderTrackRect.width * 100);
-console.log(valuePercent)
-    sliderCounterValues.style.transform = `translateY(-${valuePercent}%)`;
+    let sliderCounterValuesRect = sliderCounterValues.getBoundingClientRect();
+    let axisY = ((value / sliderTrackRect.width) * sliderCounterValuesRect.height);
+    let heightCounterValue = (sliderCounterValuesRect.height / sliderCounterValues.childElementCount);
+    let heightHiddenCounter = ((axisY / heightCounterValue) * heightCounterValue / sliderCounterValues.childElementCount);
+    let sliderCounterValuesYAxis = axisY - heightHiddenCounter;
     
+    sliderCounterValues.style.transform = `translateY(-${sliderCounterValuesYAxis}px)`;
   }
 }
 
